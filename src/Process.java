@@ -12,7 +12,6 @@ public class Process {
 	Process(int arrival, int t) {
 		this.arrival = arrival;
 		this.t = t;
-		this.penalty = 0;
 	}
 	
 	void setArrival(int arrival) {
