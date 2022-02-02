@@ -1,17 +1,23 @@
 
 public class Process {
 	
-	private int arrival;
-	private int t;
-	private int start;
-	private int end;
-	private int totalT;
-	private int wait;
-	private double penalty;
+	protected int arrival;
+	protected int t;
+	protected int start;
+	protected int end;
+	protected int totalT;
+	protected int wait;
+	protected double penalty;
 	
 	Process(int arrival, int t) {
 		this.arrival = arrival;
 		this.t = t;
+		// initialized the other attributes to 0 get no errors while the algorithm classes are empty
+		start = 0;
+		end = 0;
+		totalT = 0;
+		wait = 0;
+		penalty = 0.0;
 	}
 	
 	void setArrival(int arrival) {
