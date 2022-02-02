@@ -1,6 +1,6 @@
-package Round_Robin;
+package Shortest;
 
-public class main {
+public class ShortestJobFirst {
 
 	public static void main(String[] args) {
 		System.out.println("empieza tu codigo");
