@@ -1,8 +1,8 @@
 
 public class FIFO  extends Process {
 
-	FIFO(int arrival, int t) {
-		super(arrival, t);
+	FIFO(int arrival, int time) {
+		super(arrival, time);
 		// initialized the other attributes to 0 get no errors for now
 		super.start = 0;
 		super.end = 0;

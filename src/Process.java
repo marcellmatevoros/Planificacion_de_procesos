@@ -2,7 +2,7 @@
 public class Process {
 	
 	protected int arrival;
-	protected int t;
+	protected int time;
 	protected int start;
 	protected int end;
 	protected int totalT;
@@ -10,9 +10,9 @@ public class Process {
 	protected double penalty;
 	// arrival, t, start end totalT wait penalty
 	
-	Process(int arrival, int t) {
+	Process(int arrival, int time) {
 		this.arrival = arrival;
-		this.t = t;
+		this.time = time;
 		// initialized the other attributes to 0 get no errors while the algorithm classes are empty
 		start = 0;
 		end = 0;
@@ -29,12 +29,12 @@ public class Process {
 		return arrival;
 	}
 	
-	void setTime(int t) {
-		this.t = t;
+	void setTime(int time) {
+		this.time = time;
 	}
 	
 	int getTime() {
-		return t;
+		return time;
 	}
 	
 	void setStart(int start) {

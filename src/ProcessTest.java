@@ -42,6 +42,7 @@ public class ProcessTest {
 		int algorithm = getAlgorithm();
 		int processNum = getProcessNum();
 
+		// Storing the attributes of all processes 
 		// What would be faster, array or ArrayList??
 		int[] arrivals = new int[processNum];
 		int[] times = new int[processNum];
@@ -67,19 +68,20 @@ public class ProcessTest {
 			}
 			
 			arrivals[i] = procs.get(i).getArrival();
-			times[i] = procs.get(i).getArrival();
-
+			times[i] = procs.get(i).getTime();
+			
+			
 			/*
-			procs.get(i).setStart();
-			procs.get(i).setEnd();
-			procs.get(i).setWait();
-			procs.get(i).set
+			procs.get(i).setStart(starts);
+			procs.get(i).setEnd(ends);
+			procs.get(i).setWait(waits);
+			procs.get(i).setTotalT(totalTs);
+			procs.get(i).setPenalty();
+			*/
 
-			 */
-
-
-			/*
+			/* ================
 			 * PLEASE READ THIS
+			 * ================ 
 			 * 
 			 * now we would have to do: procs.get(procs.size()-1).setWait, setTotalTime()
 			 * ... etc
@@ -91,8 +93,8 @@ public class ProcessTest {
 			 * passing them to the setters (setter methods) ... that is why we are doing all
 			 * the calculations through the setters, and each one of you is coding the
 			 * setters of your algorithm
-			 * 
 			 */
+
 		} in.close();
 	}
 
