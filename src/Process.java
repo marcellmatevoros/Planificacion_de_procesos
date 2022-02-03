@@ -70,7 +70,7 @@ public class Process {
 	}
 	
 	void setPenalty() {
-		penalty = totalT / t;
+		penalty = totalT / time;
 	}
 	
 	double getPenalty() {
