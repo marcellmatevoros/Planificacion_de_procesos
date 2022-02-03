@@ -33,8 +33,8 @@ public class ProcessTest {
 	// ask user for time of process and return it
 	static int getTime() {
 		System.out.print("Introduzca tiempo del proceso: ");
-		int t = in.nextInt();
-		return t;
+		int time = in.nextInt();
+		return time;
 	}
 
 	public static void main(String[] args) {
