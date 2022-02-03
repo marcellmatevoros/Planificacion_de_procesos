@@ -70,7 +70,6 @@ public class ProcessTest {
 			arrivals[i] = procs.get(i).getArrival();
 			times[i] = procs.get(i).getTime();
 			
-			
 			/*
 			procs.get(i).setStart(starts);
 			procs.get(i).setEnd(ends);

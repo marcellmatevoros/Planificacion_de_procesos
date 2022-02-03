@@ -3,11 +3,6 @@ public class RoundRobin extends Process {
 	
 	RoundRobin(int arrival, int time) {
 		super(arrival, time);
-		// initialized the other attributes to 0 get no errors for now
-		super.start = 0;
-		super.end = 0;
-		super.wait = 0;
-		super.totalT = 0;
 	}
 	
 	void setStart() {
