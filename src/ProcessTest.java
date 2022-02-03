@@ -7,16 +7,17 @@ public class ProcessTest {
 
 	// ask user for how many processes, return the number of processes
 	static int getProcessNum() {
-		System.out.print("Introduzca el número de procesor que quiere introducir: ");
+		System.out.print("Introduzca el número de proceso que quiere introducir: ");
 		int processNum = in.nextInt();
 		return processNum;
 	}
 
 	// ask user for what algorithm, return the algorithm
-	static int getAlgorithm() {
+	private static int getAlgorithm() {
 		int algorithm;
 		do {
-			System.out.print("Indique el algoritmo: 1) FIFO, 2) Shortest Job First, 3) Round Robin.");
+			System.out.println("Indique el algoritmo:\n \t1) FIFO\n \t2) Shortest Job First\n \t3) Round Robin");
+			System.out.print("> ");
 			algorithm = in.nextInt();
 		} while (algorithm > 3 || algorithm < 0);
 		return algorithm;
@@ -38,45 +39,61 @@ public class ProcessTest {
 
 	public static void main(String[] args) {
 
-		while (in.hasNext()) {
+		int algorithm = getAlgorithm();
+		int processNum = getProcessNum();
 
-			int algorithm = getAlgorithm();
-			int processNum = getProcessNum();
-			ArrayList<Process> procs = new ArrayList<>(); // processes array
+		// What would be faster, array or ArrayList??
+		int[] arrivals = new int[processNum];
+		int[] times = new int[processNum];
+		int[] starts = new int[processNum];
+		int[] ends = new int[processNum];
+		int[] totalTs = new int[processNum];
+		int[] waits = new int[processNum];
+		ArrayList<Process> procs = new ArrayList<>(); // processes array
 
-			while (processNum > 0) {
+		for (int i = 0; i < processNum; i++) {
 
-				switch (algorithm) {
-				case 1:
-					procs.add(new FIFO(getArrival(), getTime()));
-					break;
-				case 2:
-					procs.add(new ShortestJobFirst(getArrival(), getTime()));
-					break;
-				case 3:
-					procs.add(new RoundRobin(getArrival(), getTime()));
-					break;
-				}
-
-				/* PLEASE READ THIS
-				 * 
-				 * now we would have to do:
-				 * procs.get(procs.size()-1).setWait, setTotalTime() ... etc
-				 * 
-				 * basically, every iteration of this while loop, we calculate the newest process' attributes 
-				 * based on the attributes from the other processes
-				 * 
-				 * We can do this by creating arrays like: times[], totalTimes[] ... etc and passing them to
-				 * the setters (setter methods) ... that is why we are doing all the calculations through the setters, 
-				 * and each one of you is coding the setters of your algorithm
-				 * 
-				 */
-
-				processNum--;
+			// make a new process and add it to processes array
+			switch (algorithm) {
+			case 1:
+				procs.add(new FIFO(getArrival(), getTime()));
+				break;
+			case 2:
+				procs.add(new ShortestJobFirst(getArrival(), getTime()));
+				break;
+			case 3:
+				procs.add(new RoundRobin(getArrival(), getTime()));
+				break;
 			}
+			
+			arrivals[i] = procs.get(i).getArrival();
+			times[i] = procs.get(i).getArrival();
 
+			/*
+			procs.get(i).setStart();
+			procs.get(i).setEnd();
+			procs.get(i).setWait();
+			procs.get(i).set
+
+			 */
+
+
+			/*
+			 * PLEASE READ THIS
+			 * 
+			 * now we would have to do: procs.get(procs.size()-1).setWait, setTotalTime()
+			 * ... etc
+			 * 
+			 * basically, every iteration of this while loop, we calculate the newest
+			 * process' attributes based on the attributes from the other processes
+			 * 
+			 * We can do this by creating arrays like: times[], totalTimes[] ... etc and
+			 * passing them to the setters (setter methods) ... that is why we are doing all
+			 * the calculations through the setters, and each one of you is coding the
+			 * setters of your algorithm
+			 * 
+			 */
 		} in.close();
-
 	}
 
 }
