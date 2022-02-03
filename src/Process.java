@@ -8,6 +8,7 @@ public class Process {
 	protected int totalT;
 	protected int wait;
 	protected double penalty;
+	// arrival, t, start end totalT wait penalty
 	
 	Process(int arrival, int t) {
 		this.arrival = arrival;
