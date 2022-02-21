@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -14,7 +13,7 @@ import java.util.Scanner;
  *
  */
 
-public class main {
+public class MarcellFIFO {
 
 	public static void main(String[] args) {
 		Scanner numero = new Scanner(System.in);
@@ -24,8 +23,7 @@ public class main {
 		int valor = 0;
 		int tiempo = 0;
 		String delay = "";
-		String waiting = "";
-		int contador = 0;
+
 		System.out.println("Cuantos procesos hay?");
 		int procesos = numero.nextInt();
 		for (int i = 0; i < procesos; i++) {
@@ -43,21 +41,13 @@ public class main {
 		for (int i = 0; i < procesos; i++) {
 			for (int j = 0; j < tiempoDeEjecucion.get(i); j++) {
 				System.out.print("X |");
+				delay += ". |";
 			}
-			if(i < procesos-1) {
-			System.out.print("\n" + ++abc + ": ");
+			if (i < procesos - 1) {
+				System.out.print("\n" + ++abc + ": ");
+				System.out.print(delay);
 			}
-			for (int j = 0; j < tiempoDeEjecucion.get(i); j++) {
-				if(contador < tiempoDeEjecucion.get(i)) {					
-					delay+=". |";
-					contador++;
-				} else {
-					waiting+="- |";
-				}
-			}
-			if(i < procesos-1)
-				System.out.print(delay + waiting);
-				
+
 		}
 	}
 }
