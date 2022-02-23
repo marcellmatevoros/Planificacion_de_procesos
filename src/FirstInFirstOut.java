@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  */
 
-public class MarcellFIFO {
+public class FirstInFirstOut {
 
 	public static void main(String[] args) {
 		Scanner numero = new Scanner(System.in);
