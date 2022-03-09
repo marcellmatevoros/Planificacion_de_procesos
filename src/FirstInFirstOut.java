@@ -47,7 +47,6 @@ public class FirstInFirstOut {
 				System.out.print("\n" + ++abc + ": ");
 				System.out.print(delay);
 			}
-
 		}
 	}
 }

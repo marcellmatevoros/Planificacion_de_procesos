@@ -1,3 +1,4 @@
+package HERE_WE_GO_AGAIN;
 
 /***
  * 
@@ -90,6 +91,9 @@ public class ShortestJobFirst {
 		}
 
 		ArrayList<Tasks> finalList = new ArrayList<Tasks>();
+		
+		for (Tasks t : allTasks)
+			finalList.add(t);
 		
 		Tasks taskCase = finalSortedTasks.get(0);
 		finalList.add(taskCase);
