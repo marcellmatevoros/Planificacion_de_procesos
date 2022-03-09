@@ -1,8 +1,11 @@
 package HERE_WE_GO_AGAIN;
 
 import java.io.IOException;
+import java.text.Collator;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Scheduler {
 	
@@ -36,20 +39,6 @@ public class Scheduler {
 			p.setPenalty( p.getTotalTime() / p.getTime() );
 	}
 	
-	protected void draw (LinkedList<Process> processes) {
-		String drawing = "";
-		for (Process p : processes) {
-			String nothing = "", wait = "", execution = "";
-			for (int i = 0; i < p.getArrival(); i++) 
-				nothing += " ";
-			for (int i = p.getArrival(); i <= p.getWait(); i++) 
-				wait += "-";
-			for (int i = p.getStart(); i <= p.getEnd(); i++) 
-				execution += "*";
-			drawing += nothing + wait + execution + "\n";
-		} System.out.println(drawing);
-	}
-	
 	/**
 	 * Prints the string, reads int from console and returns it
 	 * @param message - the message to print to console
@@ -61,18 +50,15 @@ public class Scheduler {
 	}
 	
 	/**
-	 * prints the string, reads int from console as many times as the number of 
-	 * processes
-	 * displays a prompt with the number of the process it is requesting data from
-	 * @param message - message to print through console
-	 * @param size - how many times to read from console
-	 * @return user input array of length 'size'
-	 * @throws IOException 
+	 * prints the string, reads from the console n times (n being a parameter)
+	 * @param message - String to print through console
+	 * @param n - int, how many times to read from console
+	 * @return  array - int[n]
 	 */
-	protected static int[] getProcessData (String message, int size) {
-		int[] arr = new int[size];
+	protected static int[] getProcessData (String message, int n) {
+		int[] arr = new int[n];
 		System.out.println(message);
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < n; i++) {
 			System.out.print("P" + (i+1) +": ");
 			arr[i] = in.nextInt();
 		} return arr;
@@ -87,6 +73,39 @@ public class Scheduler {
 		float avg = 0;
 		for (int thing : things) avg += thing;
 		return (avg / processNum);
+	}
+
+	protected static void draw (LinkedList<Process> processes) {
+		String drawing = "";
+		for (Process p : processes) {
+			String nothing = "", wait = "", execution = "";
+			for (int i = 0; i < p.getArrival(); i++) 
+				nothing += " ";
+			for (int i = p.getArrival(); i <= p.getWait(); i++) 
+				wait += "-";
+			for (int i = p.getStart(); i <= p.getEnd(); i++) 
+				execution += "*";
+			drawing += nothing + wait + execution + "\n";
+		} System.out.println(drawing);
+	}
+	
+	/**
+	 * Sort a LinkedList<Process> into TreeMap<attribute,index>. Only 'time' and
+	 * 'arrival' attributes of Process Class are implemented
+	 * @param Processes - LinkedList<Process>
+	 * @param attribute - String
+	 * @return map - TreeMap<atribute,index>
+	 */
+	static TreeMap<Integer,Integer> sortProcs(LinkedList<Process> processes, String attribute) throws Exception {
+		TreeMap<Integer,Integer> attributeIndexMap = new TreeMap<>();
+		String word = attribute.toLowerCase().trim();
+		for (int i = 0; i < processes.size(); i++) {
+			if (word.equals("arrival"))
+				attributeIndexMap.put(processes.get(i).getArrival(), i);
+			else if (word.equals("time"))
+				attributeIndexMap.put(processes.get(i).getTime(), i);
+			else throw new Exception("Only accepts 'arrival' or 'time' as String arguments");
+		} return attributeIndexMap;
 	}
 
 }

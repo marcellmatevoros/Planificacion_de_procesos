@@ -9,10 +9,11 @@ public class SJF extends Scheduler {
 	
 	private LinkedList<Process> finalProcesses;
 	
-	SJF() {
+	SJF() throws Exception {
 		super();
 		finalProcesses = new LinkedList<>();
 		draw(processes);
+		sortProcs(processes, "arrival");
 	}
 
 	protected void doit() {
