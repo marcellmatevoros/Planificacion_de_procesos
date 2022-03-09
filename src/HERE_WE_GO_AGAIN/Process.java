@@ -31,12 +31,18 @@ public class Process {
 	public int getWait () {return this.wait;}
 
 	public void setWait (int wait) {this.wait = wait;}
+	
+	public void setWait() {this.wait = totalTime - time;}
 
 	public int getTotalTime () {return this.totalTime;}
 
-	public void setTotalTime (int totalTime) {this.totalTime = totalTime;}
+	public void setTotalTime (int arrival) {this.arrival = arrival;}
+	
+	public void setTotalTime () {this.totalTime = end - arrival;}
 	
 	public void setPenalty (double penalty) {this.penalty = penalty;}
+	
+	public void setPenalty () {this.penalty = totalTime / time;}
 	
 	public double getPenalty () {return this.penalty;}
 	
@@ -45,7 +51,7 @@ public class Process {
 	public boolean getDone () {return done;}
 	
 	public String toString() {
-		int random = (int) Math.random() * 1000;
+		int random = (int) (Math.random() * 1000);
 		return "PID: " + random + "\n\tArrival: " + arrival + 
 				"\n\tTime: " + time + "\n\tStart: " + start +
 				"\n\tEnd: " + end + "\n\tTotalTime: " + totalTime +

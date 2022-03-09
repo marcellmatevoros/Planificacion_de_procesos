@@ -14,54 +14,52 @@ public class SJF extends Scheduler {
 
 		for (Process p : processes)
 			System.out.println(p.toString());
+		
+		sortProcs(processes, "arrival");
 
-		/* settear estos atributos despues de settear los tiempos 'start' y 'end'
-		 * de cada proceso
-		setTotalTimes();
-		setWaits();
-		setPenalties();
-		*/
 		for (Process p : processes)
 			System.out.println(p.toString());
+		System.out.println("-----------------");
+		
+		sortProcs(processes, "time");
 
-		doit();
+		for (Process p : processes)
+			System.out.println(p.toString());
+		System.out.println("-----------------");
+
+		doTheRest();
+
+		for (Process p : processes)
+			System.out.println(p.toString());
+		System.out.println("-----------------");
+
 		draw(processes); 
 
 	}
 
-	protected void doit() {
-		// for the 1st process
-		processes.get(0).setStart( processes.get(0).getArrival() );
-		processes.get(0).setEnd( processes.get(0).getArrival() + processes.get(0).getTime() );
-		processes.get(0).setWait(0);
-
-		Process current, candidate;
-		ArrayList<Integer> indexQueue = new ArrayList<>();
-		int priorProcessEnd = 0, lastExecuted = 0;
-		for (int i = 1; i < processes.size(); i++) {
-			current = processes.get(i);
-			// look for processes that arrive before current process finishes
-			for (int k = i; k < processes.size(); k++) {
-				candidate = processes.get(k);
-				// if process ahead of i arrives before current finishes
-				if (candidate.getArrival() <= (current.getArrival() + current.getTime()))
-					indexQueue.add(k); // add index of candidate to list
+	protected void doTheRest() {
+		// for the first process, we can do it manually 
+		Process p = processes.get(0);
+		processes.get(0).setEnd( p.getArrival() + p.getTime());
+		processes.get(0).setTotalTime();
+		processes.get(0).setWait();
+		
+		// now for the rest
+		// https://iq.opengenus.org/shortest-job-first-cpu-scheduling/
+		int temp, value = 0;
+		// int low
+		for (int i = 1; i < processNum; i++) {
+			temp = processes.get(i-1).getEnd();
+			int low = processes.get(i).getTime();
+			for (int j = i; j < processNum; i++) {
+				if (temp >= processes.get(j).getArrival() && low >= processes.get(j).getTime()) {
+					low = processes.get(j).getTime();
+					value = j;
+				}
 			}
-			
-			// with indexqueue, put (processes[i].time, index) in map
-			// this will sort the worthy processes by time
-			TreeMap<Integer,Integer> timeIndexMap = new TreeMap<>();
-			for (Integer index : indexQueue)
-				timeIndexMap.put( processes.get(index).getTime(), index);
-				
-			for (Integer index : timeIndexMap.values()) {
-				priorProcessEnd = processes.get(lastExecuted).getArrival() + processes.get(lastExecuted).getTime();
-				processes.get(index).setWait( priorProcessEnd - processes.get(index).getArrival() );
-				processes.get(index).setEnd( processes.get(index).getArrival() +
-											 processes.get(index).getWait() + 
-											 processes.get(index).getTime());
-				lastExecuted = index;
-			}
+			processes.get(value).setEnd(temp + processes.get(value).getTime());
+			processes.get(value).setTotalTime( processes.get(value).getEnd() - processes.get(value).getArrival());
+			processes.get(value).setWait( processes.get(value).getTotalTime() - processes.get(value).getTime());
 		}
 	}
 
