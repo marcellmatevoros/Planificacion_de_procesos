@@ -98,19 +98,24 @@ public class Scheduler {
 	 */
 	static void sortProcs(LinkedList<Process> processes, String attribute) throws Exception {
 		TreeMap<Integer,Integer> attributeIndexMap = new TreeMap<>();
+		LinkedList<Process> list = new LinkedList<>();
 		String word = attribute.toLowerCase().trim();
+
 		for (int i = 0; i < processes.size(); i++) {
 			if (word.equals("arrival"))
 				attributeIndexMap.put(processes.get(i).getArrival(), i);
 			else if (word.equals("time"))
 				attributeIndexMap.put(processes.get(i).getTime(), i);
 			else throw new Exception("Only accepts 'arrival' or 'time' as String arguments");
-		}
-		LinkedList<Process> list = new LinkedList<>();
+		} 
+
 		for (Integer index : attributeIndexMap.values())
 			list.add(processes.get(index));
-		processes.clear();
-		processes = list;
+
+		processes.clear(); 
+
+		for (Process p : list)
+			processes.add(p);
 	}
 
 }

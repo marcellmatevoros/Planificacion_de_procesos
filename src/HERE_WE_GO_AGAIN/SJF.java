@@ -11,23 +11,26 @@ public class SJF extends Scheduler {
 	
 	SJF() throws Exception {
 		super();
-		draw(processes);
-		sortProcs(processes, "arrival");
 		// set the start and end times of each process
 		
 		for (Process p : processes)
 			System.out.println(p.toString());
 		
-		/*
+		sortProcs(processes, "arrival");
+
+
+		/* settear estos atributos despues de settear los tiempos 'start' y 'end'
+		 * de cada proceso
 		setTotalTimes();
 		setWaits();
 		setPenalties();
 		*/
 
-		draw(processes); 
-
 		for (Process p : processes)
 			System.out.println(p.toString());
+
+		draw(processes); 
+
 	}
 
 	protected void doit() {
