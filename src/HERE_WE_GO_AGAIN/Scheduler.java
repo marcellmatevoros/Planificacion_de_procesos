@@ -24,17 +24,17 @@ public class Scheduler {
 			processes.add(new Process(times[i], arrivals[i]));
 	}
 	
-	void setTotalTimes() {
+	static void setTotalTimes() {
 		for (Process p : processes)
 			p.setTotalTime( p.getEnd() - p.getArrival() );
 	}
 
-	void setWaits() {
+	static void setWaits() {
 		for (Process p : processes)
 			p.setWait( p.getTotalTime() - p.getTime() );
 	}
 	
-	void setPenalties() {
+	protected static void setPenalties() {
 		for (Process p : processes)
 			p.setPenalty( p.getTotalTime() / p.getTime() );
 	}
@@ -96,7 +96,7 @@ public class Scheduler {
 	 * @param attribute - String
 	 * @return map - TreeMap<atribute,index>
 	 */
-	static TreeMap<Integer,Integer> sortProcs(LinkedList<Process> processes, String attribute) throws Exception {
+	static void sortProcs(LinkedList<Process> processes, String attribute) throws Exception {
 		TreeMap<Integer,Integer> attributeIndexMap = new TreeMap<>();
 		String word = attribute.toLowerCase().trim();
 		for (int i = 0; i < processes.size(); i++) {
@@ -105,7 +105,12 @@ public class Scheduler {
 			else if (word.equals("time"))
 				attributeIndexMap.put(processes.get(i).getTime(), i);
 			else throw new Exception("Only accepts 'arrival' or 'time' as String arguments");
-		} return attributeIndexMap;
+		}
+		LinkedList<Process> list = new LinkedList<>();
+		for (Integer index : attributeIndexMap.values())
+			list.add(processes.get(index));
+		processes.clear();
+		processes = list;
 	}
 
 }

@@ -11,9 +11,23 @@ public class SJF extends Scheduler {
 	
 	SJF() throws Exception {
 		super();
-		finalProcesses = new LinkedList<>();
 		draw(processes);
 		sortProcs(processes, "arrival");
+		// set the start and end times of each process
+		
+		for (Process p : processes)
+			System.out.println(p.toString());
+		
+		/*
+		setTotalTimes();
+		setWaits();
+		setPenalties();
+		*/
+
+		draw(processes); 
+
+		for (Process p : processes)
+			System.out.println(p.toString());
 	}
 
 	protected void doit() {
