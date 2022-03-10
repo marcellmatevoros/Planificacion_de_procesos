@@ -6,6 +6,7 @@ public class FCFS extends Scheduler {
 		super();
 		sortProcs(processes, "arrival");
 		doTheRest();
+		sortProcs(processes, "ID");
 		draw(processes);
 	}
 

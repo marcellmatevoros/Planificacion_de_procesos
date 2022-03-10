@@ -19,6 +19,21 @@ public class Scheduler {
 			processes.add(new Process((1+i), times[i], arrivals[i]));
 	}
 	
+	public static void main(String[] args) throws Exception {
+		Scheduler scheduler;
+		switch (getAlgorithm()) {
+			case 1:
+				scheduler = new FCFS();
+				break;
+			case 2:
+				scheduler = new SJF();
+				break;
+			case 3:
+				scheduler = new RR();
+				break;
+		} 
+	}
+	
 	/**
 	 * Prints the string, reads int from console and returns it
 	 * @param message - the message to print to console
@@ -30,7 +45,7 @@ public class Scheduler {
 	}
 	
 	/**
-	 * prints the string, reads from the console n times (n being a parameter)
+	 * Prints the string, reads from the console n times (n being a parameter)
 	 * @param message - String to print through console
 	 * @param n - int, how many times to read from console
 	 * @return  array - int[n]
@@ -42,6 +57,21 @@ public class Scheduler {
 			System.out.print("P" + (i+1) +": ");
 			arr[i] = in.nextInt();
 		} return arr;
+	}
+
+	/**
+	 * Asks user to choose an algorithm from the console, and returns the user
+	 * input if it is in the range [1,3]
+	 * @return algorithm  
+	 */
+	private static int getAlgorithm() {
+		int algorithm;
+		do {
+			System.out.println("Indique el algoritmo:\n \t1) FCFS\n \t2) Shortest Job First\n \t3) Round Robin");
+			System.out.print("> ");
+			algorithm = in.nextInt();
+		} while (algorithm > 3 || algorithm <= 0);
+		return algorithm;
 	}
 	
 	/**
@@ -69,7 +99,7 @@ public class Scheduler {
 	 * @param attribute - String
 	 * @return map - TreeMap<atribute,index>
 	 */
-	protected static void sortProcs(LinkedList<Process> processes, String attribute) throws Exception {
+	protected static void sortProcs (LinkedList<Process> processes, String attribute) throws Exception {
 		TreeMap<Integer,Integer> attributeIndexMap = new TreeMap<>();
 		LinkedList<Process> list = new LinkedList<>();
 		for (int i = 0; i < processes.size(); i++) {
@@ -79,9 +109,8 @@ public class Scheduler {
 				attributeIndexMap.put(processes.get(i).getTime(), i);
 			else if (attribute.equals("ID"))
 				attributeIndexMap.put(processes.get(i).getID(), i );
-			else throw new Exception("Only accepts 'arrival' or 'time' as String arguments");
-		} 
-		for (Integer index : attributeIndexMap.values())
+			else throw new Exception("Only accepts 'arrival', 'ID' or 'time' as String arguments");
+		} for (Integer index : attributeIndexMap.values())
 			list.add(processes.get(index));
 		processes.clear(); 
 		for (Process p : list)
@@ -104,9 +133,7 @@ public class Scheduler {
 			else if (attribute.equals("time"))
 				attributeIndexMap.put(processes.get(i).getTime(), i);
 			else throw new Exception("Only accepts 'arrival' or 'time' as String arguments");
-		} 
-
-		for (Integer index : attributeIndexMap.values())
+		} for (Integer index : attributeIndexMap.values())
 			list.add(processes.get(index));
 		return list;
 	}
