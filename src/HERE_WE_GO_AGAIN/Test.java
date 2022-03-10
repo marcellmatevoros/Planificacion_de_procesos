@@ -23,7 +23,7 @@ public class Test {
 
 		switch (getAlgorithm()) {
 			case 1:
-				scheduler = new FIFO();
+				scheduler = new FCFS();
 				break;
 			case 2:
 				scheduler = new SJF();
