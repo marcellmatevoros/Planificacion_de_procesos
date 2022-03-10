@@ -1,39 +1,18 @@
 package HERE_WE_GO_AGAIN;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.TreeMap;
 
 public class SJF extends Scheduler {
 	
-	private LinkedList<Process> finalProcesses;
-	
 	SJF() throws Exception {
 		super();
-		// set the start and end times of each process
-
-		for (Process p : processes)
-			System.out.println(p.toString());
-		
 		sortProcs(processes, "arrival");
-
-		for (Process p : processes)
-			System.out.println(p.toString());
-		System.out.println("-----------------");
-
 		doTheRest();
-
-		for (Process p : processes)
-			System.out.println(p.toString());
-		System.out.println("-----------------");
-
 		sortProcs(processes, "ID");
 		draw(processes); 
-
 	}
 
 	protected void doTheRest() throws Exception {
-		// for the first process, we can do it manually 
 		Process first = processes.get(0);
 		processes.get(0).setStart(first.getArrival());
 		processes.get(0).setEnd( first.getArrival() + first.getTime());
@@ -43,27 +22,29 @@ public class SJF extends Scheduler {
 		
 		LinkedList<Process> candidates, times;
 		int id;
-		//then we will select processes that arrive before the first one ends
+		int[] history = new int[processNum];
+		history[0] = 0;
+
 		for (int i = 1; i < processNum; i++) {
-			candidates = getCandidates(processes, i-1);
-			times = getSorted(candidates, "time");
-			// pls work
-			if (candidates.size() == 0 || times.size() == 0) break;
+			candidates = getCandidates(processes, history[i-1]);
+			times = getSortedList(candidates, "time");
+			//if (candidates.size() == 0 || times.size() == 0) break;
 			id = times.get(0).getID();
-			for (Process p : processes) {
-				if (p.getID() == id) {
-					p.setStart( processes.get(i-1).getEnd() );
-					p.setEnd( processes.get(i-1).getEnd() + p.getTime() );
-					p.setTotalTime();
-					p.setWait();
-					p.setPenalty();
-					p.setDone(true);
+			for (int k = 0; k < processNum; k++) {
+				if (processes.get(k).getID() == id) {
+					history[i] = k; // add index of last proc to history, to refer to 'last completed process'
+					processes.get(k).setStart(processes.get(history[i-1]).getEnd());
+					processes.get(k).setEnd( processes.get(history[i-1]).getEnd() + processes.get(k).getTime() );
+					processes.get(k).setTotalTime();
+					processes.get(k).setWait();
+					processes.get(k).setPenalty();
+					processes.get(k).setDone(true);
 				}
 			}
 		}
 	}
 	
-	static LinkedList<Process> getCandidates (LinkedList<Process> processes, int index) {
+	protected static LinkedList<Process> getCandidates (LinkedList<Process> processes, int index) {
 		LinkedList<Process> candidates = new LinkedList<>();
 		int endOfPreviousProcess = processes.get(index).getEnd();
 		for (Process p : processes) {
