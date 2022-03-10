@@ -2,6 +2,7 @@ package HERE_WE_GO_AGAIN;
 
 public class Process {
 	
+	// mi clase Proceso --> estandart + comodidad
 	private int arrival;
 	private int time;
 	private int totalTime;

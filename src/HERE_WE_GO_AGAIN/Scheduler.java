@@ -26,7 +26,7 @@ public class Scheduler {
 				scheduler = new FCFS();
 				break;
 			case 2:
-				scheduler = new SJF();
+				scheduler = new SJF(); // (esto es hacer el objeto)
 				break;
 			case 3:
 				scheduler = new RR();
