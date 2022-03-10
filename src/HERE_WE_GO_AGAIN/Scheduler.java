@@ -20,8 +20,9 @@ public class Scheduler {
 		processNum = askUser("Introduzca el número de procesos: ");
 		times = getProcessData("Introduzca los tiempos de llegada para cada proceso: ", processNum);
 		arrivals = getProcessData("Introduzca los tiempos de ejecución para cada proceso: ", processNum);
-		for (int i = 0; i < processNum; i++)
-			processes.add(new Process(times[i], arrivals[i]));
+		for (int i = 0; i < processNum; i++) {
+			processes.add(new Process((1+i), times[i], arrivals[i]));
+		}
 	}
 	
 	static void setTotalTimes() {
@@ -29,8 +30,18 @@ public class Scheduler {
 			p.setTotalTime( p.getEnd() - p.getArrival() );
 	}
 
+	static void setTotalTimes(LinkedList<Process> processList) {
+		for (Process p : processList)
+			p.setTotalTime( p.getEnd() - p.getArrival() );
+	}
+
 	static void setWaits() {
 		for (Process p : processes)
+			p.setWait( p.getTotalTime() - p.getTime() );
+	}
+
+	static void setWaits (LinkedList<Process> processList) {
+		for (Process p : processList)
 			p.setWait( p.getTotalTime() - p.getTime() );
 	}
 	
@@ -39,6 +50,11 @@ public class Scheduler {
 			p.setPenalty( p.getTotalTime() / p.getTime() );
 	}
 	
+	protected static void setPenalties (LinkedList<Process> processList) {
+		for (Process p : processList)
+			p.setPenalty( p.getTotalTime() / p.getTime() );
+	}
+
 	/**
 	 * Prints the string, reads int from console and returns it
 	 * @param message - the message to print to console
@@ -65,18 +81,12 @@ public class Scheduler {
 	}
 	
 	/**
-	 * @param thing  - any int array
-	 * @param processNum - the number of processes
-	 * @return average - the average of the contents of array
+	 * Draws each process in the list 
+	 * @param processes  
 	 */
-	protected static float average (int[] things, int processNum) {
-		float avg = 0;
-		for (int thing : things) avg += thing;
-		return (avg / processNum);
-	}
-
 	protected static void draw (LinkedList<Process> processes) {
 		String drawing = "";
+		String fuckthis = "";
 		for (Process p : processes) {
 			String nothing = "", wait = "", execution = "";
 			for (int i = 0; i < p.getArrival(); i++) 
@@ -85,13 +95,24 @@ public class Scheduler {
 				wait += "-";
 			for (int i = p.getStart(); i <= p.getEnd(); i++) 
 				execution += "*";
-			drawing += nothing + wait + execution + "\n";
+			fuckthis = p.getID() + nothing + wait + execution + "\n";
+			drawing += fuckthis;
 		} System.out.println(drawing);
+	}
+
+	/**
+	 * @param things
+	 * @return average the average of the contents of array
+	 */
+	protected static float average (int[] things) {
+		float avg = 0;
+		for (int thing : things) avg += thing;
+		return (avg / things.length);
 	}
 	
 	/**
-	 * Sort a LinkedList<Process> into TreeMap<attribute,index>. Only 'time' and
-	 * 'arrival' attributes of Process Class are implemented
+	 * Sort a LinkedList<Process> into TreeMap<attribute,index>. Only 'time',
+	 * 'arrival' and 'ID' attributes of Process Class are implemented
 	 * @param Processes - LinkedList<Process>
 	 * @param attribute - String
 	 * @return map - TreeMap<atribute,index>
@@ -104,8 +125,11 @@ public class Scheduler {
 				attributeIndexMap.put(processes.get(i).getArrival(), i);
 			else if (attribute.equals("time"))
 				attributeIndexMap.put(processes.get(i).getTime(), i);
+			else if (attribute.equals("ID"))
+				attributeIndexMap.put(processes.get(i).getID(), i );
 			else throw new Exception("Only accepts 'arrival' or 'time' as String arguments");
 		} 
+
 		for (Integer index : attributeIndexMap.values())
 			list.add(processes.get(index));
 		processes.clear(); 
@@ -113,14 +137,28 @@ public class Scheduler {
 			processes.add(p);
 	}
 	
-	static  TreeMap<Integer,Integer> getTreeMap( LinkedList<Process> processes, String attribute) {
-		TreeMap<Integer,Integer> map = new TreeMap<>();
+	
+	/**
+	 * returns the sorted list of processes
+	 * @param processes - Process List to sort
+	 * @param attribute - attribute to sort by
+	 * @return list - sorted list
+	 * @throws Exception - if the attribute name is not recognized
+	 */
+	static  LinkedList<Process> getSorted(LinkedList<Process> processes, String attribute) throws Exception {
+		TreeMap<Integer,Integer> attributeIndexMap = new TreeMap<>();
+		LinkedList<Process> list = new LinkedList<>();
 		for (int i = 0; i < processes.size(); i++) {
 			if (attribute.equals("arrival"))
-				map.put(processes.get(i).getArrival(), i);
+				attributeIndexMap.put(processes.get(i).getArrival(), i);
 			else if (attribute.equals("time"))
-				map.put(processes.get(i).getTime(), i);
-		} return map;
+				attributeIndexMap.put(processes.get(i).getTime(), i);
+			else throw new Exception("Only accepts 'arrival' or 'time' as String arguments");
+		} 
+
+		for (Integer index : attributeIndexMap.values())
+			list.add(processes.get(index));
+		return list;
 	}
 
 }

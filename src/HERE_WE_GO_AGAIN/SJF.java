@@ -20,12 +20,6 @@ public class SJF extends Scheduler {
 		for (Process p : processes)
 			System.out.println(p.toString());
 		System.out.println("-----------------");
-		
-		sortProcs(processes, "time");
-
-		for (Process p : processes)
-			System.out.println(p.toString());
-		System.out.println("-----------------");
 
 		doTheRest();
 
@@ -33,34 +27,49 @@ public class SJF extends Scheduler {
 			System.out.println(p.toString());
 		System.out.println("-----------------");
 
+		sortProcs(processes, "ID");
 		draw(processes); 
 
 	}
 
-	protected void doTheRest() {
+	protected void doTheRest() throws Exception {
 		// for the first process, we can do it manually 
-		Process p = processes.get(0);
-		processes.get(0).setEnd( p.getArrival() + p.getTime());
+		Process first = processes.get(0);
+		processes.get(0).setStart(first.getArrival());
+		processes.get(0).setEnd( first.getArrival() + first.getTime());
 		processes.get(0).setTotalTime();
 		processes.get(0).setWait();
+		processes.get(0).setDone(true);
 		
-		// now for the rest
-		// https://iq.opengenus.org/shortest-job-first-cpu-scheduling/
-		int temp, value = 0;
-		// int low
+		LinkedList<Process> candidates, times;
+		int id;
+		//then we will select processes that arrive before the first one ends
 		for (int i = 1; i < processNum; i++) {
-			temp = processes.get(i-1).getEnd();
-			int low = processes.get(i).getTime();
-			for (int j = i; j < processNum; i++) {
-				if (temp >= processes.get(j).getArrival() && low >= processes.get(j).getTime()) {
-					low = processes.get(j).getTime();
-					value = j;
+			candidates = getCandidates(processes, i-1);
+			times = getSorted(candidates, "time");
+			// pls work
+			if (candidates.size() == 0 || times.size() == 0) break;
+			id = times.get(0).getID();
+			for (Process p : processes) {
+				if (p.getID() == id) {
+					p.setStart( processes.get(i-1).getEnd() );
+					p.setEnd( processes.get(i-1).getEnd() + p.getTime() );
+					p.setTotalTime();
+					p.setWait();
+					p.setPenalty();
+					p.setDone(true);
 				}
 			}
-			processes.get(value).setEnd(temp + processes.get(value).getTime());
-			processes.get(value).setTotalTime( processes.get(value).getEnd() - processes.get(value).getArrival());
-			processes.get(value).setWait( processes.get(value).getTotalTime() - processes.get(value).getTime());
 		}
+	}
+	
+	static LinkedList<Process> getCandidates (LinkedList<Process> processes, int index) {
+		LinkedList<Process> candidates = new LinkedList<>();
+		int endOfPreviousProcess = processes.get(index).getEnd();
+		for (Process p : processes) {
+			if (p.getArrival() <= endOfPreviousProcess && !p.getDone())
+				candidates.add(p);
+		} return candidates;
 	}
 
 }

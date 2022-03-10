@@ -10,8 +10,10 @@ public class Process {
 	private int wait;
 	private double penalty;
 	private boolean done;
+	private int ID;
 
-	Process (int arrival, int time) {
+	Process (int ID, int arrival, int time) {
+		this.ID = ID;
 		this.arrival = arrival;
 		this.time = time;
 	}
@@ -50,9 +52,12 @@ public class Process {
 	
 	public boolean getDone () {return done;}
 	
+	public void setID (int ID) {this.ID = ID;}
+	
+	public int getID () {return ID;}
+	
 	public String toString() {
-		int random = (int) (Math.random() * 1000);
-		return "PID: " + random + "\n\tArrival: " + arrival + 
+		return "PID: " + ID + "\n\tArrival: " + arrival + 
 				"\n\tTime: " + time + "\n\tStart: " + start +
 				"\n\tEnd: " + end + "\n\tTotalTime: " + totalTime +
 				"\n\tPenalty: " + penalty + "\n\tWait: " + wait;
