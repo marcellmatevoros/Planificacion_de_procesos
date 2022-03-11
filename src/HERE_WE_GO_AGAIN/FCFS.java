@@ -8,19 +8,18 @@ public class FCFS extends Scheduler {
 		doTheRest();
 		sortProcs(processes, "ID");
 		draw(processes);
+		printAverage(processes, "totalTime", "Tiempo total medio: ");
+		printAverage(processes, "wait", "Tiempo de espera medio: ");
 	}
 
 	protected void doTheRest() {
-		int[] history = new int[processNum];
 		Process p, first, last;
-		
 		first = processes.get(0);
 		processes.get(0).setStart( first.getArrival() );
 		processes.get(0).setEnd( first.getArrival() + first.getTime() );
 		processes.get(0).setTotalTime();
 		processes.get(0).setWait();
 		processes.get(0).setPenalty();
-
 		for (int i = 1; i < processNum; i++) {
 			p = processes.get(i);
 			last = processes.get(i-1);

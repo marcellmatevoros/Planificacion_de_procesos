@@ -10,6 +10,8 @@ public class SJF extends Scheduler {
 		doTheRest();
 		sortProcs(processes, "ID");
 		draw(processes); 
+		printAverage(processes, "totalTime", "Tiempo total medio: ");
+		printAverage(processes, "wait", "Tiempo de espera medio: ");
 	}
 
 	protected static LinkedList<Process> getCandidates (LinkedList<Process> processes, int index) {
@@ -31,9 +33,9 @@ public class SJF extends Scheduler {
 		processes.get(0).setDone(true);
 		
 		LinkedList<Process> candidates, times;
-		int id;
 		int[] history = new int[processNum];
 		history[0] = 0;
+		int id;
 
 		for (int i = 1; i < processNum; i++) {
 			candidates = getCandidates(processes, history[i-1]);

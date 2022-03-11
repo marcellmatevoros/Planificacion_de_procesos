@@ -88,7 +88,7 @@ public class Scheduler {
 				wait += ".";
 			for (int i = 0; i < p.getTime(); i++) 
 				execution += "x";
-			drawing += (p.getID() + ":" + nothing + wait + execution + "\n");
+			drawing += ("\t" + p.getID() + ":" + nothing + wait + execution + "\n");
 		} System.out.println(drawing);
 	}
 
@@ -138,6 +138,25 @@ public class Scheduler {
 		return list;
 	}
 
+	/**
+	 * Prints the message and the average of the attribute in the list of Processes  
+	 * @param procs 
+	 * @param attribute - the name of the attribute as String 
+	 * @param msg - Message to print to console
+	 */
+	protected static void printAverage (LinkedList<Process> procs, String attribute, String msg) {
+		float avg = 0;
+		for (Process p : procs) {
+			if (attribute.equals("totalTime"))
+				avg += p.getTotalTime();
+			else if (attribute.equals("wait"))
+				avg += p.getTotalTime();
+			else if (attribute.equals("penalty"))
+				avg += p.getPenalty();
+		} avg /= procs.size();
+		System.out.println("\t" + msg + String.format("%.2f", avg));
+	}
+
 	//// NEVER USED METHODS: ////
 	
 	/**
@@ -145,21 +164,11 @@ public class Scheduler {
 	 * @param value - the value of the ID
 	 * @return index - index of the Process in the list containing that ID value
 	 */
-	protected static int findIndexByID(LinkedList<Process> list, int value) {
+	protected static int getIndexFromID(LinkedList<Process> list, int value) {
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getID() == value)
 				return i;
 		} return 0;
-	}
-
-	/**
-	 * @param things
-	 * @return average the average of the contents of array
-	 */
-	protected static float average (int[] things) {
-		float avg = 0;
-		for (int thing : things) avg += thing;
-		return (avg / things.length);
 	}
 
 }
