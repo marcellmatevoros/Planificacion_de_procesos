@@ -78,7 +78,7 @@ public class Scheduler {
 	 * Draws each process in the list 
 	 * @param processes  
 	 */
-	protected static void draw(LinkedList<Process> processes) {
+	protected void draw(LinkedList<Process> processes) {
 		String drawing = "\n";
 		for (Process p : processes) {
 			String nothing = "", wait = "", execution = "";

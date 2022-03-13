@@ -2,7 +2,6 @@ package HERE_WE_GO_AGAIN;
 
 public class Process {
 	
-	// mi clase Proceso --> estandart + comodidad
 	private int arrival;
 	private int time;
 	private int totalTime;
@@ -10,8 +9,10 @@ public class Process {
 	private int end;
 	private int wait;
 	private double penalty;
-	private boolean done;
 	private int ID;
+	// only for Round Robin algorithm
+	private boolean done;
+	private int timeLeft;
 
 	Process (int ID, int arrival, int time) {
 		this.ID = ID;
@@ -22,6 +23,8 @@ public class Process {
 	public int getArrival () {return this.arrival;}
 	
 	public int getTime () {return this.time;}
+	
+	public void setTime (int time) {this.time = time;}
 	
 	public int getStart () {return this.start;}
 
@@ -39,7 +42,7 @@ public class Process {
 
 	public int getTotalTime () {return this.totalTime;}
 
-	public void setTotalTime (int arrival) {this.arrival = arrival;}
+	public void setTotalTime (int totalTime) {this.totalTime = totalTime;}
 	
 	public void setTotalTime () {this.totalTime = end - arrival;}
 	
@@ -56,6 +59,10 @@ public class Process {
 	public void setID (int ID) {this.ID = ID;}
 	
 	public int getID () {return ID;}
+	
+	public int getTimeLeft() {return timeLeft;}
+	
+	public void setTimeLeft (int timeLeft) {this.timeLeft = timeLeft;}
 	
 	public String toString() {
 		return "PID: " + ID + "\n\tArrival: " + arrival + 

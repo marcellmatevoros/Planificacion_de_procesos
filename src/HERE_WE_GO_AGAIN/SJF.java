@@ -14,6 +14,13 @@ public class SJF extends Scheduler {
 		printAverage(processes, "wait", "Tiempo de espera medio: ");
 	}
 
+	/**
+	 * Returns a list of Processes that arrive before the process at position 
+	 * 'index' ends.
+	 * @param processes
+	 * @param index
+	 * @return candidates
+	 */
 	protected static LinkedList<Process> getCandidates (LinkedList<Process> processes, int index) {
 		LinkedList<Process> candidates = new LinkedList<>();
 		int endOfPreviousProcess = processes.get(index).getEnd();
