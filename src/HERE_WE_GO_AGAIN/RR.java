@@ -87,7 +87,6 @@ public class RR extends Scheduler {
 			for (int i = 0; i < processNum; i++) total += times[i];
 
 		} while (total != 0);
-
 	}
 
 	protected LinkedList<Process> doTheRest() {

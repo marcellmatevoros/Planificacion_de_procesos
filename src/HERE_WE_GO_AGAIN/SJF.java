@@ -12,6 +12,7 @@ public class SJF extends Scheduler {
 		draw(processes); 
 		printAverage(processes, "totalTime", "Tiempo total medio: ");
 		printAverage(processes, "wait", "Tiempo de espera medio: ");
+		System.out.println("\t'.' - espera, 'x' - ejecución");
 	}
 
 	/**
