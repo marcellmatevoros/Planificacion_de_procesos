@@ -8,13 +8,15 @@ public class Scheduler {
 	
 	private static Scanner in = new Scanner(System.in);
 	protected static LinkedList<Process> processes; 
+	protected static int[] times;
+	protected static int[] arrivals;
 	protected int processNum;
 	
 	Scheduler () {
 		processes = new LinkedList<>();
 		processNum = askUser("Introduzca el número de procesos: ");
-		int[] times = getProcessData("Introduzca los tiempos de llegada para cada proceso: ", processNum);
-		int[] arrivals = getProcessData("Introduzca los tiempos de ejecución para cada proceso: ", processNum);
+		times = getProcessData("Introduzca los tiempos de llegada para cada proceso: ", processNum);
+		arrivals = getProcessData("Introduzca los tiempos de ejecución para cada proceso: ", processNum);
 		for (int i = 0; i < processNum; i++)
 			processes.add(new Process((1+i), times[i], arrivals[i]));
 	}
@@ -29,7 +31,7 @@ public class Scheduler {
 				scheduler = new SJF(); // (esto es hacer el objeto)
 				break;
 			case 3:
-				scheduler = new RR();
+				RR rr = new RR();
 				break;
 		} 
 	}

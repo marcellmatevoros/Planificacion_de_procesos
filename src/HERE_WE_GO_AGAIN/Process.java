@@ -20,6 +20,13 @@ public class Process {
 		this.time = time;
 	}
 	
+	Process (int ID, int arrival, int time, int wait) {
+		this.ID = ID;
+		this.arrival = arrival;
+		this.time = time;
+		this.wait = wait;
+	}
+	
 	public int getArrival () {return this.arrival;}
 	
 	public int getTime () {return this.time;}
